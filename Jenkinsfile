@@ -1,13 +1,16 @@
 pipeline {
     agent any
-    environment {
-        AZURE_CLIENT_ID = credentials('azure-client-id')
-        AZURE_CLIENT_SECRET = credentials('azure-client-secret')
-        AZURE_TENANT_ID = credentials('azure-tenant-id')
-        RESOURCE_GROUP = "js_resource_group"
-        FUNCTION_APP_NAME = "js-cicd-assignment-3"
-    }
     stages {
+        stage('Checkout') {
+            steps {
+                // Cloning the GitHub repository with credentials
+                git(
+                    branch: 'main',
+                    url: 'https://github.com/jagjeetsinghsandhu22129/cicd_lab_2.git',
+                    credentialsId: 'cicd' // Ensure this is the ID of your Jenkins credentials for GitHub
+                )
+            }
+        }
         stage('Build') {
             steps {
                 script {
